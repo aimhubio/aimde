@@ -477,11 +477,34 @@ function PanelChart(props) {
         .tickFormat((d, i) => moment.unix(d).format('HH:mm:ss D MMM, YY'));
     }
 
-    axes.current
+    const xAxis = axes.current
       .append('g')
       .attr('class', 'x axis')
       .attr('transform', `translate(0, ${plotBox.current.height})`)
       .call(xAxisTicks);
+
+    const initialTicks = axes.current.selectAll('.tick');
+    const ticksPositions = [];
+    initialTicks.each((data) => {
+      ticksPositions.push(xScale(data));
+    });
+
+    for (let i = ticksPositions.length - 1; i > 0; i--) {
+      let currentTickPos = ticksPositions[i];
+      let prevTickPos = ticksPositions[i - 1];
+      if (currentTickPos - prevTickPos < 10) {
+        xAxis.select(`.tick:nth-of-type(${i})`).attr('hidden', true);
+      }
+    }
+
+    if (scaleOptions[chart.settings.persistent.xScale] === 'log') {
+      xAxis
+        .selectAll('text')
+        .style('text-anchor', 'middle')
+        .attr('dx', '-.8em')
+        .attr('dy', '.15em')
+        .attr('transform', 'rotate(-40)');
+    }
 
     svg.current
       .append('text')
