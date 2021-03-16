@@ -705,7 +705,7 @@ function ParallelCoordinatesChart(props) {
 
     let runIndex = 0;
 
-    traceList?.traces.forEach((traceModel) => {
+    traces.current.forEach((traceModel) => {
       _.uniqBy(traceModel.series, 'run.run_hash').forEach((series) => {
         if (traceModel.chart !== props.index) {
           runIndex++;

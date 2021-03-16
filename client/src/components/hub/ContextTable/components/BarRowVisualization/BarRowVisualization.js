@@ -59,15 +59,14 @@ function BarRowVisualization({ hiddenMetrics, setHiddenMetrics }) {
       >
         <UI.Icon i='visibility_off' scale={1.2} />
         <span className='ContextTableBar__item__label__text'>
-          {!!hiddenMetrics?.length
-            ? (
-              <>
-                {hiddenMetrics.length} hidden row
-                {hiddenMetrics.length > 1 ? 's' : ''}
-              </>
-            )
-            : 'Hide Rows'
-          }
+          {!!hiddenMetrics?.length ? (
+            <>
+              {hiddenMetrics.length} hidden row
+              {hiddenMetrics.length > 1 ? 's' : ''}
+            </>
+          ) : (
+            'Hide Rows'
+          )}
         </span>
       </div>
     </div>
